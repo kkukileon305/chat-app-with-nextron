@@ -5,6 +5,6 @@ type LayoutProps = {
 };
 
 const Layout = ({ children }: LayoutProps) => {
-  return <main className='p-4 min-h-screen flex flex-col justify-center items-center'>{children}</main>;
+  return <main className='min-h-screen flex flex-col justify-center items-center'>{children}</main>;
 };
 export default Layout;

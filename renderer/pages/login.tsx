@@ -48,7 +48,7 @@ const login = () => {
       <Head>
         <title>login</title>
       </Head>
-      <div className='max-w-[600px] min-w-[280px] w-full'>
+      <div className='max-w-[600px] min-w-[280px] w-full p-4'>
         <Title title='로그인' />
         <form className='flex flex-col w-full' onSubmit={handleSubmit(onSubmit)}>
           <Text className='mb-1'>Email</Text>

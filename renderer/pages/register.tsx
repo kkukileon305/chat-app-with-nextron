@@ -1,14 +1,14 @@
-import { FormEventHandler, useState } from 'react';
+import { useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import Title from '../components/text/Title';
 import Text from '../components/text/Text';
 import SquareButton from '../components/buttons/SquareButton';
-import { auth } from '../lib/firebase';
+import { auth, database } from '../lib/firebase';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
-import useUser from '../hooks/useUser';
 import { useRouter } from 'next/router';
+import { ref, set } from 'firebase/database';
 
 type RegisterInputs = {
   email: string;
@@ -35,6 +35,11 @@ const register = () => {
         displayName,
       });
 
+      await set(ref(database, `users/${credential.user.uid}`), {
+        displayName: credential.user.displayName,
+        email: credential.user.email,
+      });
+
       router.push('/login');
     } catch (error) {
       setError('email', {
@@ -50,7 +55,7 @@ const register = () => {
       <Head>
         <title>register</title>
       </Head>
-      <div className='max-w-[600px] min-w-[280px] w-full'>
+      <div className='max-w-[600px] min-w-[280px] w-full p-4'>
         <Title title='회원가입' />
         <form className='flex flex-col w-full' onSubmit={handleSubmit(onSubmit)}>
           <Text className='mb-1'>Email</Text>
