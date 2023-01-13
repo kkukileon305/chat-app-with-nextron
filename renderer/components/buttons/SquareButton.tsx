@@ -4,11 +4,12 @@ type SquareButtonProps = {
   children: ReactNode;
   onClick?: MouseEventHandler;
   className?: string;
+  disabled?: boolean;
 };
 
-const SquareButton = ({ children, onClick, className }: SquareButtonProps) => {
+const SquareButton = ({ children, onClick, className, disabled }: SquareButtonProps) => {
   return (
-    <button className={`w-full bg-gray-700  py-2 ${className}`} onClick={onClick}>
+    <button disabled={disabled} className={`w-full bg-gray-700  py-2 ${className}`} onClick={onClick}>
       {children}
     </button>
   );

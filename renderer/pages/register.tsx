@@ -16,6 +16,8 @@ type RegisterInputs = {
 
 const register = () => {
   const router = useRouter();
+
+  const [isLoading, setIsLoading] = useState(false);
   const {
     register,
     handleSubmit,
@@ -24,6 +26,7 @@ const register = () => {
   } = useForm<RegisterInputs>();
 
   const onSubmit = async ({ email, password }: RegisterInputs) => {
+    setIsLoading(true);
     try {
       await createUserWithEmailAndPassword(auth, email, password);
       router.push('/login');
@@ -31,6 +34,8 @@ const register = () => {
       setError('email', {
         message: '이미 존재하는 이메일입니다.',
       });
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -69,7 +74,7 @@ const register = () => {
             )}
           </Text>
 
-          <SquareButton>회원가입</SquareButton>
+          <SquareButton disabled={isLoading}>{isLoading ? '가입중...' : '회원가입'}</SquareButton>
         </form>
 
         <div className='flex justify-between my-2'>
