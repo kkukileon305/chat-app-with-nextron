@@ -1,4 +1,4 @@
-import { FormEventHandler, useState } from 'react';
+import { useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
@@ -6,8 +6,9 @@ import Title from '../components/text/Title';
 import Text from '../components/text/Text';
 import SquareButton from '../components/buttons/SquareButton';
 import { auth } from '../lib/firebase';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useRouter } from 'next/router';
+import useUser from '../hooks/useUser';
 
 type LoginInputs = {
   email: string;
@@ -16,6 +17,7 @@ type LoginInputs = {
 
 const login = () => {
   const router = useRouter();
+  const setUser = useUser(store => store.setUser);
 
   const [isLoading, setIsLoading] = useState(false);
   const {
@@ -28,7 +30,10 @@ const login = () => {
   const onSubmit = async ({ email, password }: LoginInputs) => {
     setIsLoading(true);
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      const credential = await signInWithEmailAndPassword(auth, email, password);
+      setUser(credential.user);
+
+      router.push('/main');
     } catch (error) {
       setError('email', {
         message: '이메일과 비밀번호를 다시 확인해주세요.',

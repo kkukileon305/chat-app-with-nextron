@@ -6,12 +6,14 @@ import Title from '../components/text/Title';
 import Text from '../components/text/Text';
 import SquareButton from '../components/buttons/SquareButton';
 import { auth } from '../lib/firebase';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import useUser from '../hooks/useUser';
 import { useRouter } from 'next/router';
 
 type RegisterInputs = {
   email: string;
   password: string;
+  displayName: string;
 };
 
 const register = () => {
@@ -25,10 +27,14 @@ const register = () => {
     setError,
   } = useForm<RegisterInputs>();
 
-  const onSubmit = async ({ email, password }: RegisterInputs) => {
+  const onSubmit = async ({ email, password, displayName }: RegisterInputs) => {
     setIsLoading(true);
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
+      const credential = await createUserWithEmailAndPassword(auth, email, password);
+      await updateProfile(credential.user, {
+        displayName,
+      });
+
       router.push('/login');
     } catch (error) {
       setError('email', {
@@ -64,11 +70,18 @@ const register = () => {
             {...register('password', { minLength: 6, required: true })}
           />
 
+          <Text className='mb-1 mt-4'>닉네임</Text>
+          <input
+            className='block w-full text-gray-900 focus:outline-none' //
+            type='text'
+            {...register('displayName', { minLength: 2, required: true })}
+          />
+
           <Text className='my-4 text-center'>
-            {errors.email || errors.password ? (
-              <>
-                이메일을 확인해주세요. <br /> 비밀번호는 6글자 이상이여야 합니다.
-              </>
+            {errors.email || errors.password || errors.displayName ? (
+              <span className='text-red-500'>
+                이메일을 확인해주세요. <br /> 비밀번호는 6글자 이상이여야 합니다. <br /> 닉네임은 2글자 이상이여야 합니다.
+              </span>
             ) : (
               '이메일과 비밀번호를 입력해주세요.'
             )}

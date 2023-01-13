@@ -15,7 +15,7 @@ const firebaseConfig: FirebaseOptions = {
   messagingSenderId: '1087278626050',
   appId: '1:1087278626050:web:9024defb41ff0b5c8e3e1b',
   measurementId: 'G-T2WJL4P83V',
-  databaseURL: 'https://chat-app-with-nextron-default-rtdb.firebaseio.com',
+  databaseURL: 'https://chat-app-with-nextron.firebaseio.com',
 };
 
 // Initialize Firebase
