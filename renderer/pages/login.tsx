@@ -28,8 +28,7 @@ const login = () => {
   const onSubmit = async ({ email, password }: LoginInputs) => {
     setIsLoading(true);
     try {
-      const credential = await signInWithEmailAndPassword(auth, email, password);
-      console.log(credential);
+      await signInWithEmailAndPassword(auth, email, password);
     } catch (error) {
       setError('email', {
         message: '이메일과 비밀번호를 다시 확인해주세요.',
