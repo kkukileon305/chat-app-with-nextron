@@ -65,11 +65,11 @@ const login = () => {
 
           <Text className='my-4 text-center'>
             {errors.email || errors.password ? (
-              <>
-                이메일을 확인해주세요. <br /> 비밀번호는 6글자 이상이여야 합니다.
-              </>
+              <span className='text-red-500'>
+                이메일과 비밀번호를 확인해주세요. <br /> 비밀번호는 6글자 이상이여야 합니다.
+              </span>
             ) : (
-              '이메일과 비밀번호를 입력해주세요.'
+              <>이메일과 비밀번호를 입력해주세요.</>
             )}
           </Text>
 
