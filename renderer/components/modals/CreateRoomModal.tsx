@@ -5,7 +5,7 @@ import RoundedButton from '../buttons/RoundedButton';
 import Modal from './Modal';
 import useUser from '../../hooks/useUser';
 import useModal from '../../hooks/useModal';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 type RoomInputs = {
   name: string;
@@ -50,7 +50,7 @@ const CreateRoomModal = () => {
 
   return (
     <Modal>
-      <h2 className='font-bold text-xl'>방 이름</h2>
+      <h2 className='font-bold text-xl text-center'>방 이름</h2>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className='my-2 relative'>
           <input //
