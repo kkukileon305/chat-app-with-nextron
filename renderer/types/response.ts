@@ -9,3 +9,14 @@ export interface ChatRoom {
   creatorEmail: string;
   name: string;
 }
+
+export interface UsersResponse {
+  [uid: string]: Omit<User, 'uid'>;
+}
+
+export interface User {
+  uid: string;
+  displayName: string;
+  email: string;
+  createdAt: string;
+}

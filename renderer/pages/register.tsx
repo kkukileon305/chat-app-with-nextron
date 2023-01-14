@@ -9,6 +9,7 @@ import { auth, database } from '../lib/firebase';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { useRouter } from 'next/router';
 import { ref, set } from 'firebase/database';
+import { krIntl } from '../lib/formatter';
 
 type RegisterInputs = {
   email: string;
@@ -38,6 +39,7 @@ const register = () => {
       await set(ref(database, `users/${credential.user.uid}`), {
         displayName: credential.user.displayName,
         email: credential.user.email,
+        createdAt: krIntl.format(new Date()),
       });
 
       router.push('/login');

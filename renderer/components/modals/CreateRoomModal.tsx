@@ -6,6 +6,7 @@ import Modal from './Modal';
 import useUser from '../../hooks/useUser';
 import useModal from '../../hooks/useModal';
 import { useRef, useState } from 'react';
+import { krIntl } from '../../lib/formatter';
 
 type RoomInputs = {
   name: string;
@@ -26,8 +27,6 @@ const CreateRoomModal = () => {
 
   const onSubmit = async ({ name }: RoomInputs) => {
     if (!user) return;
-
-    const krIntl = new Intl.DateTimeFormat('ko', { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: false });
 
     try {
       setDisabled(true);
