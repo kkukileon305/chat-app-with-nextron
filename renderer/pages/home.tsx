@@ -16,7 +16,7 @@ function Home() {
       <ul className='flex justify-end gap-2'>
         {links.map(link => (
           <Link key={link.id} href={`/${link.url}`}>
-            <a className='px-4 py-2 border border-gray-600 text-gray-600 block text-center'>{link.title}</a>
+            <a className='px-4 py-2 border border-gray-600 text-gray-600 block text-center w-[100px]'>{link.title}</a>
           </Link>
         ))}
       </ul>

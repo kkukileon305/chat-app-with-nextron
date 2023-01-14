@@ -9,7 +9,7 @@ type SquareButtonProps = {
 
 const SquareButton = ({ children, onClick, className, disabled }: SquareButtonProps) => {
   return (
-    <button disabled={disabled} className={`w-full bg-gray-700 text-white py-2 ${className}`} onClick={onClick}>
+    <button disabled={disabled} className={`bg-gray-700 text-white py-2 ${className}`} onClick={onClick}>
       {children}
     </button>
   );
