@@ -5,6 +5,7 @@ import RoundedButton from '../buttons/RoundedButton';
 import Modal from './Modal';
 import useUser from '../../hooks/useUser';
 import useModal from '../../hooks/useModal';
+import { useState } from 'react';
 
 type RoomInputs = {
   name: string;
@@ -13,6 +14,8 @@ type RoomInputs = {
 const CreateRoomModal = () => {
   const user = useUser(store => store.user);
   const setIsOpen = useModal(store => store.setIsOpen);
+
+  const [disabed, setDisabled] = useState(false);
 
   const {
     register,
@@ -27,6 +30,7 @@ const CreateRoomModal = () => {
     const krIntl = new Intl.DateTimeFormat('ko', { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: false });
 
     try {
+      setDisabled(true);
       await push(ref(database, `rooms`), {
         name,
         creator: user.displayName,
@@ -39,6 +43,8 @@ const CreateRoomModal = () => {
       setError('name', {
         message: '생성실패',
       });
+    } finally {
+      setDisabled(false);
     }
   };
 
@@ -55,7 +61,9 @@ const CreateRoomModal = () => {
           />
           {errors.name && <p className='absolute top-[calc(50%-12px)] right-2 text-red-500'>2글자 이상이여야합니다.</p>}
         </div>
-        <RoundedButton className='w-full'>만들기</RoundedButton>
+        <RoundedButton disabled={disabed} className='w-full'>
+          {disabed ? '생성중...' : '만들기'}
+        </RoundedButton>
       </form>
     </Modal>
   );
