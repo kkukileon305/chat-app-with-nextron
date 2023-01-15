@@ -53,13 +53,12 @@ const dm = () => {
   const onSubmit = async ({ message }: DmInputs) => {
     if (!user || !inputRef.current) return;
 
+    inputRef.current.value = '';
     await push(ref(database, `directMessages/${uids}`), {
       message,
       createdAt: krIntl.format(new Date()),
       displayName: user.displayName,
     });
-
-    inputRef.current.value = '';
   };
 
   return (
@@ -68,7 +67,7 @@ const dm = () => {
         <Back />
         <p>{targetUser ? targetUser.displayName : '불러오는 중'}</p>
       </div>
-      <div className='h-[calc(100vh-88px)] bg-gray-500 rounded-xl overflow-hidden p-4'>
+      <div className='h-[calc(100vh-88px)] bg-gray-700 rounded-xl overflow-hidden p-4'>
         <ul className='h-[calc(100%-74px)] mb-4 overflow-y-auto'>
           {messages.map((message, index) => (
             <Message ref={index === messages.length - 1 ? lastMessageRef : null} key={message.key} message={message} />

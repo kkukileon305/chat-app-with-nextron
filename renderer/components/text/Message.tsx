@@ -7,7 +7,7 @@ type MessageProps = {
 
 const Message = forwardRef<HTMLDivElement, MessageProps>(({ message }, ref) => {
   return (
-    <div ref={ref} className='p-4 bg-gray-400 rounded-xl mb-4'>
+    <div ref={ref} className='p-4 rounded-xl mb-4 text-white font-bold'>
       <div className='flex gap-4'>
         <p>{message.displayName}</p>
         <p>{message.createdAt}</p>
