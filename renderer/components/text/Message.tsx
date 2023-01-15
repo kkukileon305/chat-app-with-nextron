@@ -1,12 +1,13 @@
+import { forwardRef } from 'react';
 import { MessageType } from '../../types/response';
 
 type MessageProps = {
   message: MessageType;
 };
 
-const Message = ({ message }: MessageProps) => {
+const Message = forwardRef<HTMLDivElement, MessageProps>(({ message }, ref) => {
   return (
-    <div className='p-4 bg-gray-400 rounded-xl mb-4'>
+    <div ref={ref} className='p-4 bg-gray-400 rounded-xl mb-4'>
       <div className='flex gap-4'>
         <p>{message.displayName}</p>
         <p>{message.createdAt}</p>
@@ -14,5 +15,6 @@ const Message = ({ message }: MessageProps) => {
       <p>{message.message}</p>
     </div>
   );
-};
+});
+
 export default Message;

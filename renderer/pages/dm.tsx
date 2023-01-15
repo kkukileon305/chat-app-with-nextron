@@ -22,6 +22,8 @@ const dm = () => {
   const { ref: inputRefForForm, ...rest } = register('message', { required: true });
   const inputRef = useRef<HTMLInputElement | null>(null);
 
+  const lastMessageRef = useRef<HTMLDivElement>(null);
+
   const [messages, setMessages] = useState<MessageType[]>([]);
 
   useEffect(() => {
@@ -42,6 +44,12 @@ const dm = () => {
     });
   }, []);
 
+  useEffect(() => {
+    lastMessageRef.current?.scrollIntoView({
+      block: 'end',
+    });
+  }, [messages]);
+
   const onSubmit = async ({ message }: DmInputs) => {
     if (!user || !inputRef.current) return;
 
@@ -61,9 +69,9 @@ const dm = () => {
         <p>{targetUser ? targetUser.displayName : '불러오는 중'}</p>
       </div>
       <div className='h-[calc(100vh-88px)] bg-gray-500 rounded-xl overflow-hidden p-4'>
-        <ul className='h-[calc(100%-74px)] mb-4'>
-          {messages.map(message => (
-            <Message key={message.key} message={message} />
+        <ul className='h-[calc(100%-74px)] mb-4 overflow-y-auto'>
+          {messages.map((message, index) => (
+            <Message ref={index === messages.length - 1 ? lastMessageRef : null} key={message.key} message={message} />
           ))}
         </ul>
         <form className='flex p-4 bg-gray-400 rounded-xl' onSubmit={handleSubmit(onSubmit)}>

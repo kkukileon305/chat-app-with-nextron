@@ -2,6 +2,8 @@ export interface ChatRoomsResponse {
   [key: string]: Omit<ChatRoom, 'key'>;
 }
 
+export type ChatRoomResponse = Omit<ChatRoom, 'key'>;
+
 export interface ChatRoom {
   key: string;
   createdAt: string;
