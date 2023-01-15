@@ -49,8 +49,9 @@ const main = () => {
 
       <div className='max-w-[1060px] min-h-screen w-full p-4 flex gap-4'>
         <UserList />
-        <div className='w-[calc(100%-216px)]'>
-          <ul className='border border-black h-[calc(100vh-152px)] overflow-y-auto'>
+        <div className='w-[calc(100%-216px)] p-4'>
+          <h2 className='font-bold text-xl mb-4'>채팅 목록</h2>
+          <ul className='h-[calc(100vh-228px)] overflow-y-auto'>
             {chatRooms.map(chatRoom => (
               <RoomItem key={chatRoom.key} chatRoom={chatRoom} />
             ))}
