@@ -62,7 +62,7 @@ const register = () => {
         <form className='flex flex-col w-full' onSubmit={handleSubmit(onSubmit)}>
           <Text className='mb-1'>Email</Text>
           <input
-            className='block w-full text-gray-900 focus:outline-none'
+            className='block w-full text-gray-900'
             type='email'
             {...register('email', {
               required: true,
@@ -71,7 +71,7 @@ const register = () => {
 
           <Text className='mb-1 mt-4'>Password</Text>
           <input
-            className='block w-full text-gray-900 focus:outline-none' //
+            className='block w-full text-gray-900' //
             type='password'
             autoComplete='false'
             {...register('password', { minLength: 6, required: true })}
@@ -79,7 +79,7 @@ const register = () => {
 
           <Text className='mb-1 mt-4'>닉네임</Text>
           <input
-            className='block w-full text-gray-900 focus:outline-none' //
+            className='block w-full text-gray-900' //
             type='text'
             {...register('displayName', { minLength: 2, required: true })}
           />

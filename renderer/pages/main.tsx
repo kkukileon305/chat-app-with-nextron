@@ -15,8 +15,8 @@ import { ChatRoom, ChatRoomsResponse } from '../types/response';
 
 const main = () => {
   const router = useRouter();
-
   const user = useUser(store => store.user);
+
   const { isOpen, setIsOpen } = useModal(({ isOpen, setIsOpen }) => ({ isOpen, setIsOpen }));
 
   const [chatRooms, setChatrooms] = useState<ChatRoom[]>([]);

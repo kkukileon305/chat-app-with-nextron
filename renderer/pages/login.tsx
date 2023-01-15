@@ -54,7 +54,7 @@ const login = () => {
         <form className='flex flex-col w-full' onSubmit={handleSubmit(onSubmit)}>
           <Text className='mb-1'>Email</Text>
           <input
-            className='block w-full text-gray-900 focus:outline-none'
+            className='block w-full text-gray-900'
             type='email'
             {...register('email', {
               required: true,
@@ -63,7 +63,7 @@ const login = () => {
 
           <Text className='mb-1 mt-4'>Password</Text>
           <input
-            className='block w-full text-gray-900 focus:outline-none' //
+            className='block w-full text-gray-900' //
             type='password'
             autoComplete='false'
             {...register('password', { minLength: 6, required: true })}
