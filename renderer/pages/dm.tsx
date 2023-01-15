@@ -1,12 +1,13 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
-import { get, push, ref } from 'firebase/database';
+import { get, onValue, push, ref } from 'firebase/database';
 import { useForm } from 'react-hook-form';
 import Back from '../components/buttons/Back';
 import useUser from '../hooks/useUser';
 import { database } from '../lib/firebase';
-import { User, UserResponse } from '../types/response';
+import { MessageType, MessageResponse, User, UserResponse } from '../types/response';
 import { krIntl } from '../lib/formatter';
+import Message from '../components/text/Message';
 
 type DmInputs = {
   message: string;
@@ -15,11 +16,13 @@ type DmInputs = {
 const dm = () => {
   const router = useRouter();
   const user = useUser(store => store.user);
-
   const [targetUser, setTargetUser] = useState<User | null>(null);
   const uids = useMemo(() => [router.query.uid as string, user?.uid].sort().join('_'), [router.query.uid]);
-
   const { register, handleSubmit } = useForm<DmInputs>();
+  const { ref: inputRefForForm, ...rest } = register('message', { required: true });
+  const inputRef = useRef<HTMLInputElement | null>(null);
+
+  const [messages, setMessages] = useState<MessageType[]>([]);
 
   useEffect(() => {
     get(ref(database, `users/${router.query.uid}`)).then(snapshot => {
@@ -28,16 +31,27 @@ const dm = () => {
 
       setTargetUser(user);
     });
+
+    return onValue(ref(database, `directMessages/${uids}`), snapshot => {
+      const messageResponse = snapshot.val() as MessageResponse;
+
+      if (!messageResponse) return;
+
+      const messages = Object.entries(messageResponse).map(entry => ({ key: entry[0], ...entry[1] }));
+      setMessages(messages);
+    });
   }, []);
 
   const onSubmit = async ({ message }: DmInputs) => {
-    if (!user) return;
+    if (!user || !inputRef.current) return;
 
-    push(ref(database, `directMessages/${uids}`), {
+    await push(ref(database, `directMessages/${uids}`), {
       message,
       createdAt: krIntl.format(new Date()),
       displayName: user.displayName,
     });
+
+    inputRef.current.value = '';
   };
 
   return (
@@ -47,9 +61,22 @@ const dm = () => {
         <p>{targetUser ? targetUser.displayName : '불러오는 중'}</p>
       </div>
       <div className='h-[calc(100vh-88px)] bg-gray-500 rounded-xl overflow-hidden p-4'>
-        <ul className=''></ul>
+        <ul className='h-[calc(100%-74px)] mb-4'>
+          {messages.map(message => (
+            <Message key={message.key} message={message} />
+          ))}
+        </ul>
         <form className='flex p-4 bg-gray-400 rounded-xl' onSubmit={handleSubmit(onSubmit)}>
-          <input className='bg-transparent block w-[calc(100%-60px)] placeholder:text-gray-600' placeholder='메세지 입력하기...' type='text' {...register('message', { required: true })} />
+          <input
+            className='bg-transparent block w-[calc(100%-60px)] placeholder:text-gray-600'
+            placeholder='메세지 입력하기...'
+            type='text'
+            {...rest}
+            ref={e => {
+              inputRef.current = e;
+              inputRefForForm(e);
+            }}
+          />
           <button className='w-[60px] border border-black'>보내기</button>
         </form>
       </div>

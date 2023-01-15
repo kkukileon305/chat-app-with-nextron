@@ -22,3 +22,14 @@ export interface User {
   email: string;
   createdAt: string;
 }
+
+export interface MessageResponse {
+  [key: string]: Omit<MessageType, 'key'>;
+}
+
+export interface MessageType {
+  key: string;
+  createdAt: string;
+  displayName: string;
+  message: string;
+}
