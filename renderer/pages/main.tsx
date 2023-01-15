@@ -1,17 +1,17 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import Head from 'next/head';
 import { signOut } from 'firebase/auth';
 import { onValue, ref } from 'firebase/database';
 import RoundedButton from '../components/buttons/RoundedButton';
 import CreateRoomModal from '../components/modals/CreateRoomModal';
 import Text from '../components/text/Text';
+import RoomItem from '../components/buttons/RoomItem';
+import UserList from '../components/panels/UserList';
 import useModal from '../hooks/useModal';
 import useUser from '../hooks/useUser';
 import { auth, database } from '../lib/firebase';
 import { ChatRoom, ChatRoomsResponse } from '../types/response';
-import RoomItem from '../components/buttons/RoomItem';
-import Head from 'next/head';
-import UserList from '../components/panels/UserList';
 
 const main = () => {
   const router = useRouter();
@@ -47,7 +47,7 @@ const main = () => {
 
       {isOpen && <CreateRoomModal />}
 
-      <div className='max-w-[1060px] min-h-screen w-full p-4 flex gap-4'>
+      <div className='max-w-[1060px] min-h-screen w-full flex gap-4'>
         <UserList />
         <div className='w-[calc(100%-216px)] p-4'>
           <h2 className='font-bold text-xl mb-4'>채팅 목록</h2>

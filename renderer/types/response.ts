@@ -11,8 +11,10 @@ export interface ChatRoom {
 }
 
 export interface UsersResponse {
-  [uid: string]: Omit<User, 'uid'>;
+  [uid: string]: UserResponse;
 }
+
+export type UserResponse = Omit<User, 'uid'>;
 
 export interface User {
   uid: string;

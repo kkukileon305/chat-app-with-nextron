@@ -21,7 +21,7 @@ const UserList = () => {
   }, []);
 
   return (
-    <div className='w-[200px] border border-black p-4'>
+    <div className='w-[200px] p-4'>
       <h2 className='font-bold text-xl'>유저 목록</h2>
       <ul className='my-4'>
         {users.map(user => (
