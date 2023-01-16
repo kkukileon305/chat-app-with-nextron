@@ -64,8 +64,8 @@ const main = () => {
           </RoundedButton>
           <div className='flex items-center justify-end gap-4'>
             <div className='text-right'>
-              <Text>{user?.displayName || '테스트용'}님</Text>
-              <Text>{user?.email || '테스트이메일'}</Text>
+              <Text>{user?.displayName}님</Text>
+              <Text>{user?.email}</Text>
             </div>
             <RoundedButton onClick={logOut}>로그아웃</RoundedButton>
           </div>
