@@ -50,7 +50,10 @@ const main = () => {
       <div className='max-w-[1060px] min-h-screen w-full flex gap-4'>
         <UserList />
         <div className='w-[calc(100%-216px)] p-4'>
-          <h2 className='font-bold text-xl mb-4'>채팅 목록</h2>
+          <div className='flex items-center gap-4 mb-4'>
+            <h2 className='font-bold text-xl'>채팅 목록</h2>
+            <p>원하는 방을 클릭하여 그룹 채팅으로 이동합니다.</p>
+          </div>
           <ul className='h-[calc(100vh-228px)] overflow-y-auto'>
             {chatRooms.map(chatRoom => (
               <RoomItem key={chatRoom.key} chatRoom={chatRoom} />

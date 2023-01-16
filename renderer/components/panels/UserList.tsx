@@ -22,7 +22,10 @@ const UserList = () => {
 
   return (
     <div className='w-[200px] p-4'>
-      <h2 className='font-bold text-xl'>유저 목록</h2>
+      <div>
+        <h2 className='font-bold text-xl'>유저 목록</h2>
+        <p>클릭하여 1:1 채팅으로 이동합니다.</p>
+      </div>
       <ul className='my-4'>
         {users.map(user => (
           <UserItem key={user.uid} user={user} />

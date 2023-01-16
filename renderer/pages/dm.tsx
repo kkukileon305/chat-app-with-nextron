@@ -8,6 +8,7 @@ import { database } from '../lib/firebase';
 import { MessageType, MessageResponse, User, UserResponse } from '../types/response';
 import { krIntl } from '../lib/formatter';
 import Message from '../components/text/Message';
+import Head from 'next/head';
 
 type DmInputs = {
   message: string;
@@ -62,32 +63,37 @@ const dm = () => {
   };
 
   return (
-    <div className='max-w-[1060px] min-h-screen w-full p-4 '>
-      <div className='flex items-center gap-4 mb-4'>
-        <Back />
-        <p>{targetUser ? targetUser.displayName : '불러오는 중'}</p>
+    <>
+      <Head>
+        <title>{targetUser ? targetUser.displayName : '불러오는 중'}</title>
+      </Head>
+      <div className='max-w-[1060px] min-h-screen w-full p-4 '>
+        <div className='flex items-center gap-4 mb-4'>
+          <Back />
+          <p>{targetUser ? targetUser.displayName : '불러오는 중'}</p>
+        </div>
+        <div className='h-[calc(100vh-88px)] bg-gray-700 rounded-xl overflow-hidden p-4'>
+          <ul className='h-[calc(100%-74px)] mb-4 overflow-y-auto'>
+            {messages.map((message, index) => (
+              <Message ref={index === messages.length - 1 ? lastMessageRef : null} key={message.key} message={message} />
+            ))}
+          </ul>
+          <form className='flex p-4 bg-gray-400 rounded-xl' onSubmit={handleSubmit(onSubmit)}>
+            <input
+              className='bg-transparent block w-[calc(100%-60px)] placeholder:text-gray-600'
+              placeholder='메세지 입력하기...'
+              type='text'
+              {...rest}
+              ref={e => {
+                inputRef.current = e;
+                inputRefForForm(e);
+              }}
+            />
+            <button className='w-[60px] border border-black'>보내기</button>
+          </form>
+        </div>
       </div>
-      <div className='h-[calc(100vh-88px)] bg-gray-700 rounded-xl overflow-hidden p-4'>
-        <ul className='h-[calc(100%-74px)] mb-4 overflow-y-auto'>
-          {messages.map((message, index) => (
-            <Message ref={index === messages.length - 1 ? lastMessageRef : null} key={message.key} message={message} />
-          ))}
-        </ul>
-        <form className='flex p-4 bg-gray-400 rounded-xl' onSubmit={handleSubmit(onSubmit)}>
-          <input
-            className='bg-transparent block w-[calc(100%-60px)] placeholder:text-gray-600'
-            placeholder='메세지 입력하기...'
-            type='text'
-            {...rest}
-            ref={e => {
-              inputRef.current = e;
-              inputRefForForm(e);
-            }}
-          />
-          <button className='w-[60px] border border-black'>보내기</button>
-        </form>
-      </div>
-    </div>
+    </>
   );
 };
 export default dm;
