@@ -32,7 +32,7 @@ const main = () => {
 
       if (!roomsResponse) return;
 
-      const newChatRooms = Object.entries(roomsResponse).map(entry => ({ ...entry[1], key: entry[0] }));
+      const newChatRooms = Object.entries(roomsResponse).map(([key, value]) => ({ ...value, key }));
       setChatrooms(newChatRooms);
     });
 

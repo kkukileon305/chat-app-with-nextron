@@ -13,7 +13,7 @@ const UserList = () => {
 
       if (!usersResponse) return;
 
-      const newUsers = Object.entries(usersResponse).map(entry => ({ ...entry[1], uid: entry[0] }));
+      const newUsers = Object.entries(usersResponse).map(([uid, value]) => ({ ...value, uid }));
       setUsers(newUsers);
     });
 

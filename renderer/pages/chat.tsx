@@ -39,7 +39,7 @@ const chat = () => {
 
       if (!messageResponse) return;
 
-      const messages = Object.entries(messageResponse).map(entry => ({ key: entry[0], ...entry[1] }));
+      const messages = Object.entries(messageResponse).map(([key, value]) => ({ ...value, key }));
       setMessages(messages);
     });
   }, []);
