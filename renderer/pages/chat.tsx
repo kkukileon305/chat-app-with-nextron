@@ -18,10 +18,11 @@ const chat = () => {
   const router = useRouter();
   const user = useUser(store => store.user);
   const [targetRoom, setTargetRoom] = useState<ChatRoom | null>(null);
+
   const { register, handleSubmit } = useForm<ChatInputs>();
   const { ref: inputRefForForm, ...rest } = register('message', { required: true });
-  const inputRef = useRef<HTMLInputElement | null>(null);
 
+  const inputRef = useRef<HTMLInputElement | null>(null);
   const lastMessageRef = useRef<HTMLDivElement>(null);
 
   const [messages, setMessages] = useState<MessageType[]>([]);
